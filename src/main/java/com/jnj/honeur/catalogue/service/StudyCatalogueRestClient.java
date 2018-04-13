@@ -1,7 +1,6 @@
 package com.jnj.honeur.catalogue.service;
 
 import com.jnj.honeur.catalogue.model.Study;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -67,7 +65,10 @@ public class StudyCatalogueRestClient {
         String apiUrl = "https://localhost:8448/studies";
         StudyCatalogueRestClient restClient = new StudyCatalogueRestClient(apiUrl);
 
-        String studyNumber = "S2";
+        Study study = restClient.findStudyById(4L);
+        System.out.println(study);
+
+        /*String studyNumber = "S6";
 
         final Study study = new Study();
         study.setName("HONEUR_" + studyNumber);
@@ -80,6 +81,8 @@ public class StudyCatalogueRestClient {
         System.out.println("Created study: " + createdStudy);
 
         createdStudy.setAcknowledgments("Updated acknowledgments for study HONEUR_" + studyNumber);
+        Notebook notebook = new Notebook();
+        notebook.setUrl("https://localhost:8446/#/notebook/2D9MHMHE9");
         Study updatedStudy = restClient.saveStudy(study);
         System.out.println("Updated study: " + updatedStudy);
 
@@ -90,6 +93,6 @@ public class StudyCatalogueRestClient {
         System.out.println("All studies: ");
         for(Study s:allStudies) {
             System.out.println(s);
-        }
+        }*/
     }
 }

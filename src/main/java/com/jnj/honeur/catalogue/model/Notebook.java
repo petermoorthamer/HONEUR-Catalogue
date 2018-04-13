@@ -1,5 +1,7 @@
 package com.jnj.honeur.catalogue.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -24,6 +26,7 @@ public class Notebook implements Serializable {
     private Calendar modifiedDate;
     @ManyToOne
     @JoinColumn(name = "STUDY_ID", nullable = false)
+    @JsonIgnore
     private Study study;
 
     public Long getId() {
