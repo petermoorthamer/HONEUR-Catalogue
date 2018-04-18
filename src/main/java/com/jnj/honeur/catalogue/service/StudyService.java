@@ -1,5 +1,6 @@
 package com.jnj.honeur.catalogue.service;
 
+import com.jnj.honeur.catalogue.model.Notebook;
 import com.jnj.honeur.catalogue.model.Study;
 import com.jnj.honeur.catalogue.repository.StudyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,10 @@ public class StudyService {
     }
 
     public Study save(final Study study) {
+        // Make sure the notebook study link is set
+        for(Notebook notebook:study.getNotebooks()) {
+            notebook.setStudy(study);
+        }
         return studyRepository.save(study);
     }
 
