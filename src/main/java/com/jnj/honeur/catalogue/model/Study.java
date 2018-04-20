@@ -24,6 +24,10 @@ public class Study implements Serializable {
     private String number;
     private String description;
     private String acknowledgments;
+    @Column(name = "LEAD_USERID")
+    private Long leadUserId;
+    @Column(name = "COLLABORATING_ORGANIZATION_IDS")
+    private String collaboratingOrganizationIds;
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar modifiedDate;
     @OneToMany(mappedBy = "study", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
@@ -62,6 +66,20 @@ public class Study implements Serializable {
     }
     public void setAcknowledgments(String acknowledgments) {
         this.acknowledgments = acknowledgments;
+    }
+
+    public Long getLeadUserId() {
+        return leadUserId;
+    }
+    public void setLeadUserId(Long leadUserId) {
+        this.leadUserId = leadUserId;
+    }
+
+    public String getCollaboratingOrganizationIds() {
+        return collaboratingOrganizationIds;
+    }
+    public void setCollaboratingOrganizationIds(String collaboratingOrganizationIds) {
+        this.collaboratingOrganizationIds = collaboratingOrganizationIds;
     }
 
     public Calendar getModifiedDate() {
