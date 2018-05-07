@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface StudyRepository extends JpaRepository<Study, Long> {
 
-    String BASE_QUERY = "SELECT DISTINCT s FROM Study s left join fetch s.notebooks";
+    String BASE_QUERY = "SELECT DISTINCT s FROM Study s left join fetch s.notebooks n left join fetch n.sharedNotebooks ";
 
     @Query(BASE_QUERY + " WHERE s.id = :id")
     @Override

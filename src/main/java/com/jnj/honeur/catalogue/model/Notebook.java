@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Represents a notebook linked to a study record in the HONEUR Study Catalogue
@@ -28,6 +29,8 @@ public class Notebook implements Serializable {
     @JoinColumn(name = "STUDY_ID", nullable = false)
     @JsonIgnore
     private Study study;
+    @OneToMany(mappedBy = "notebook", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+    private Set<SharedNotebook> sharedNotebooks;
 
     public Long getId() {
         return id;
@@ -69,6 +72,13 @@ public class Notebook implements Serializable {
     }
     public void setStudy(Study study) {
         this.study = study;
+    }
+
+    public Set<SharedNotebook> getSharedNotebooks() {
+        return sharedNotebooks;
+    }
+    public void setSharedNotebooks(Set<SharedNotebook> sharedNotebooks) {
+        this.sharedNotebooks = sharedNotebooks;
     }
 
     @Override

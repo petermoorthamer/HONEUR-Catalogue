@@ -1,5 +1,7 @@
 package com.jnj.honeur.catalogue.controller;
 
+import com.jnj.honeur.catalogue.model.Notebook;
+import com.jnj.honeur.catalogue.model.SharedNotebook;
 import com.jnj.honeur.catalogue.model.Study;
 import com.jnj.honeur.catalogue.service.StudyService;
 import org.slf4j.Logger;
@@ -74,6 +76,22 @@ public class StudyCatalogueController {
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             return new ResponseEntity<>("The study cannot be saved!", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/studies/{studyId}/{notebookId}/{sharedNotebookUuid}")
+    public ResponseEntity<Object> saveSharedNotebook(@PathVariable Long studyId, @PathVariable Long notebookId, @PathVariable String sharedNotebookUuid, @RequestBody SharedNotebook sharedNotebook) {
+        try {
+            final Optional<Notebook> notebook = studyService.findNotebookById(notebookId);
+            if(!notebook.isPresent()) {
+                throw new IllegalArgumentException("No notebook found with ID " + notebookId);
+            }
+            sharedNotebook.setNotebook(notebook.get());
+            SharedNotebook savedSharedNotebook = studyService.save(sharedNotebook);
+            return ResponseEntity.created(new URI("/studies/" + studyId + "/" + notebookId + "/" + savedSharedNotebook.getId())).build();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return new ResponseEntity<>("The shared notebook cannot be saved!", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
